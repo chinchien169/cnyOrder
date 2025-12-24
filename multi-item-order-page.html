@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鞭炮系列订购单 - Cracker Series Order Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+        
+        .products-section {
+            border-right: 2px solid #e0e0e0;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+        
+        .category-header {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            border-bottom: 2px solid #d32f2f;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .category-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        
+        .category-subtitle {
+            font-size: 1.1em;
+            color: #666;
+        }
+        
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table-header {
+            background: #d32f2f;
+            color: white;
+            position: sticky;
+            top: 60px;
+            z-index: 9;
+        }
+        
+        .table-header th {
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #b71c1c;
+            font-size: 0.9em;
+        }
+        
+        .product-row {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .product-row:hover {
+            background: #fff3e0;
+        }
+        
+        .product-row td {
+            padding: 12px 8px;
+            border: 1px solid #e0e0e0;
+            vertical-align: middle;
+        }
+        
+        .code-cell {
+            font-weight: bold;
+            color: #d32f2f;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .no-cell {
+            text-align: center;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .item-cell {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .product-cell {
+            color: #555;
+        }
+        
+        .packing-cell {
+            text-align: center;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .price-cell {
+            text-align: right;
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1em;
+        }
+        
+        .order-cell {
+            text-align: center;
+            padding: 8px !important;
+        }
+        
+        .qty-input {
+            width: 60px;
+            padding: 6px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        
+        .qty-input:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+        
+        .add-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85em;
+            transition: all 0.3s;
+            margin-top: 4px;
+            width: 100%;
+        }
+        
+        .add-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+        
+        .cart-section {
+            background: #fafafa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            height: fit-content;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .cart-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cart-count {
+            background: #d32f2f;
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+        
+        .cart-empty {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-size: 1em;
+        }
+        
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-code {
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 0.9em;
+        }
+        
+        .cart-item-name {
+            font-size: 0.9em;
+            color: #333;
+            margin-top: 2px;
+        }
+        
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+        
+        .cart-item-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #666;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 8px;
+        }
+        
+        .cart-item-price {
+            text-align: right;
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1em;
+        }
+        
+        .cart-summary {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #d32f2f;
+            margin-bottom: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .summary-total {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #d32f2f;
+            padding-top: 10px;
+            border-top: 2px solid #d32f2f;
+        }
+        
+        .checkout-form {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .checkout-btn:hover {
+            background: #45a049;
+            transform: scale(1.02);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+            font-size: 0.9em;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 1200px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-section {
+                border-right: none;
+                border-bottom: 2px solid #e0e0e0;
+            }
+            
+            .cart-section {
+                position: static;
+                max-height: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-table {
+                font-size: 0.85em;
+            }
+            
+            .table-header th {
+                padding: 8px 4px;
+                font-size: 0.8em;
+            }
+            
+            .product-row td {
+                padding: 8px 4px;
+            }
+            
+            .qty-input {
+                width: 50px;
+                padding: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧨 鞭炮系列 Cracker Series</h1>
+            <p>订购单 Order Form</p>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="products-section">
+                <div class="category-header">
+                    <div class="category-title">鞭炮系列</div>
+                    <div class="category-subtitle">Cracker Series</div>
+                </div>
+                
+                <table class="products-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th style="width: 10%;">ORDER CODE</th>
+                            <th style="width: 5%;">NO</th>
+                            <th style="width: 25%;">ITEM<br>CRACKERS SERIES</th>
+                            <th style="width: 25%;">产品<br>鞭炮系列</th>
+                            <th style="width: 10%;">PACKING<br>含量</th>
+                            <th style="width: 10%;">PRICE<br>价格</th>
+                            <th style="width: 15%;">ORDER<br>订购</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="cart-section">
+                <div class="cart-title">
+                    购物车 Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                
+                <div id="cartContent">
+                    <div class="cart-empty">购物车是空的<br>Your cart is empty</div>
+                </div>
+                
+                <div id="checkoutSection" style="display: none;">
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span>小计 Subtotal:</span>
+                            <span id="subtotal">RM0.00</span>
+                        </div>
+                        <div class="summary-row summary-total">
+                            <span>总计 Total:</span>
+                            <span id="total">RM0.00</span>
+                        </div>
+                    </div>
+                    
+                    <form class="checkout-form" id="checkoutForm">
+                        <div class="form-group">
+                            <label for="customerName">姓名 Name *</label>
+                            <input type="text" id="customerName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customerPhone">电话 Phone *</label>
+                            <input type="tel" id="customerPhone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shippingAddress">地址 Address</label>
+                            <textarea id="shippingAddress" rows="2"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="checkout-btn" id="checkoutBtn">
+                            提交订单 Place Order
+                        </button>
+                    </form>
+                    
+                    <div id="message" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // Product catalog
+        let products = [];
+        let cart = [];
+
+        // Webhook URL - Replace with your n8n webhook URL
+        const WEBHOOK_URL = 'https://chinchien169.app.n8n.cloud/webhook-test/a8919dca-d242-4780-927c-178e694b0853';
+
+        // Load products from Excel file
+        async function loadProductsFromExcel() {
+            try {
+                const fileData = await window.fs.readFile('MT2026 代理价格.xlsx');
+                const workbook = XLSX.read(fileData, { type: 'array' });
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                
+                console.log('Loaded Excel data:', jsonData);
+                
+                // Map Excel columns to products
+                products = jsonData.map((row, index) => ({
+                    id: index + 1,
+                    orderCode: row['ORDER CODE'] || row['订单代码'] || '',
+                    no: row['NO'] || index + 1,
+                    item: row['ITEM'] || row['ITEM CRACKERS SERIES'] || '',
+                    product: row['产品'] || row['产品 鞭炮系列'] || '',
+                    packing: row['PACKING'] || row['含量'] || '',
+                    price: parseFloat(String(row['PRICE'] || row['价格'] || '0').replace('RM', '').replace(',', '').trim()) || 0
+                }));
+                
+                console.log('Processed products:', products);
+                displayProducts();
+                
+            } catch (error) {
+                console.error('Error loading Excel file:', error);
+                // Fallback to sample data if file can't be read
+                loadSampleData();
+            }
+        }
+
+        // Fallback sample data based on your image
+        function loadSampleData() {
+            products = [
+                { id: 1, orderCode: 'CS-01', no: 1, item: '8 FEETS CRACKERS 440', product: '8尺红炮 (440粒)', packing: '30/1', price: 425.00 },
+                { id: 2, orderCode: 'CS-1A', no: 2, item: '8 FEETS CRACKERS RED 520 (Premium)', product: '8尺足红炮 (520粒) (精品)', packing: '40/1', price: 530.00 },
+                { id: 3, orderCode: 'CS-02', no: 3, item: '8 FEETS CRACKERS ROSE', product: '8尺玫瑰红', packing: '30/1', price: 540.00 },
+                { id: 4, orderCode: 'CS-03', no: 4, item: '8 FEETS CRACKERS GOLD', product: '8尺满地黄金', packing: '30/1', price: 560.00 },
+                { id: 5, orderCode: 'CS-03A', no: 5, item: '8 FEETS CRACKERS PURPLE', product: '8尺紫气东来', packing: '30/1', price: 580.00 },
+                { id: 6, orderCode: 'CS-05', no: 6, item: '8 FEETS CRACKERS GREEN', product: '8尺青云直上', packing: '30/1', price: 580.00 },
+                { id: 7, orderCode: 'CS-06', no: 7, item: '8 FEETS CRACKERS ORANGE', product: '8尺橙心橙意', packing: '30/1', price: 580.00 },
+                { id: 8, orderCode: 'CS-07', no: 8, item: '8 FEETS RAINBOW COLOUR', product: '8尺满地彩虹', packing: '30/1', price: 580.00 },
+                { id: 9, orderCode: 'CS-08', no: 9, item: '12 FEETS CRACKERS ROSE', product: '12尺彩光玫瑰红炮', packing: '18/1', price: 540.00 },
+                { id: 10, orderCode: 'CS-09', no: 10, item: '12 FEETS CRACKERS GOLD', product: '12尺满地黄金', packing: '18/1', price: 590.00 },
+                { id: 11, orderCode: 'CS-010', no: 11, item: '18 FEETS CRACKERS ROSE', product: '18尺玫瑰红', packing: '16/1', price: 615.00 },
+                { id: 12, orderCode: 'CS-011', no: 12, item: '18 FEETS CRACKERS GOLD', product: '18尺满地黄金', packing: '16/1', price: 630.00 },
+                { id: 13, orderCode: 'CS-012', no: 13, item: '30 FEETS CRACKERS ROSE', product: '30尺玫瑰红', packing: '5/1', price: 530.00 },
+                { id: 14, orderCode: 'CS-013', no: 14, item: '30 FEETS CRACKERS GOLD', product: '30尺满地黄金', packing: '5/1', price: 550.00 },
+                { id: 15, orderCode: 'CS-013A', no: 15, item: '33 FEETS CRACKERS RED+PURPLE+ORANGE', product: '33尺彩色(三辛开泰) 精品', packing: '5/1', price: 560.00 },
+                { id: 16, orderCode: 'CS-015', no: 16, item: '88 FEETS CRACKERS GOLD', product: '88尺满地黄金(带胆&彩盒)', packing: '4/1', price: 710.00 },
+                { id: 17, orderCode: 'CS-016', no: 17, item: '108 FEETS CRACKERS GOLD', product: '108尺满地黄金(带胆&彩盒)', packing: '3/1', price: 710.00 },
+                { id: 18, orderCode: 'CS-017', no: 18, item: '5 COLOUR CRACKERS (Premium)', product: '五福临门 (精品)', packing: '3/1', price: 730.00 },
+                { id: 19, orderCode: 'CS-018', no: 19, item: '138 FEETS 7 COLOUR (Premium)', product: '138尺七星报喜 (精品)', packing: '1/1', price: 550.00 }
+            ];
+            displayProducts();
+        }
+
+        // Display products in table
+        function displayProducts() {
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = '';
+            
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.className = 'product-row';
+                row.innerHTML = `
+                    <td class="code-cell">${product.orderCode}</td>
+                    <td class="no-cell">${product.no}</td>
+                    <td class="item-cell">${product.item}</td>
+                    <td class="product-cell">${product.product}</td>
+                    <td class="packing-cell">${product.packing}</td>
+                    <td class="price-cell">RM${product.price.toFixed(2)}</td>
+                    <td class="order-cell">
+                        <input type="number" id="qty-${product.id}" class="qty-input" value="0" min="0" max="999">
+                        <button class="add-btn" onclick="addToCart(${product.id})">添加 Add</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const quantity = parseInt(document.getElementById(`qty-${productId}`).value);
+            
+            if (quantity <= 0) {
+                alert('请输入数量 Please enter quantity');
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: quantity
+                });
+            }
+            
+            updateCart();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            document.getElementById(`qty-${productId}`).value = 0;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartContent = document.getElementById('cartContent');
+            const cartCount = document.getElementById('cartCount');
+            const checkoutSection = document.getElementById('checkoutSection');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = '<div class="cart-empty">购物车是空的<br>Your cart is empty</div>';
+                checkoutSection.style.display = 'none';
+                return;
+            }
+            
+            checkoutSection.style.display = 'block';
+            
+            const cartHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <div>
+                            <div class="cart-item-code">${item.orderCode}</div>
+                            <div class="cart-item-name">${item.item}</div>
+                            <div class="cart-item-name">${item.product}</div>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">删除</button>
+                    </div>
+                    <div class="cart-item-details">
+                        <span>数量: ${item.quantity} × RM${item.price.toFixed(2)}</span>
+                        <span class="cart-item-price">RM${(item.quantity * item.price).toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            cartContent.innerHTML = `<div class="cart-items">${cartHTML}</div>`;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            document.getElementById('subtotal').textContent = `RM${subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `RM${subtotal.toFixed(2)}`;
+        }
+
+        // Handle checkout
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const messageDiv = document.getElementById('message');
+            
+            checkoutBtn.disabled = true;
+            checkoutBtn.textContent = '处理中... Processing...';
+            messageDiv.style.display = 'none';
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const orderData = {
+                orderNumber: 'ORD-' + Date.now(),
+                timestamp: new Date().toISOString(),
+                customer: {
+                    name: document.getElementById('customerName').value,
+                    phone: document.getElementById('customerPhone').value,
+                    address: document.getElementById('shippingAddress').value
+                },
+                items: cart.map(item => ({
+                    orderCode: item.orderCode,
+                    productId: item.id,
+                    itemName: item.item,
+                    productName: item.product,
+                    packing: item.packing,
+                    price: item.price,
+                    quantity: item.quantity,
+                    subtotal: item.price * item.quantity
+                })),
+                summary: {
+                    subtotal: subtotal,
+                    total: subtotal
+                }
+            };
+            
+            console.log('Order Data:', orderData);
+            
+            if (WEBHOOK_URL === 'https://chinchien169.app.n8n.cloud/webhook/a8919dca-d242-4780-927c-178e694b0853') {
+                messageDiv.textContent = '演示模式：请在控制台查看订单数据。配置webhook URL以提交订单。\nDemo mode: Check console for order data. Configure webhook URL to submit orders.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = '提交订单 Place Order';
+                return;
+            }
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                
+                if (response.ok) {
+                    messageDiv.textContent = `订单提交成功！Order placed successfully! Order #${orderData.orderNumber}`;
+                    messageDiv.className = 'message success';
+                    messageDiv.style.display = 'block';
+                    
+                    // Clear cart and form
+                    cart = [];
+                    products.forEach(p => {
+                        const input = document.getElementById(`qty-${p.id}`);
+                        if (input) input.value = 0;
+                    });
+                    updateCart();
+                    document.getElementById('checkoutForm').reset();
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = '提交订单时出错。请重试。\nError placing order. Please try again.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+            } finally {
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = '提交订单 Place Order';
+            }
+        });
+
+        // Initialize
+        loadProductsFromExcel();
+    </script>
+</body>
+</html>
