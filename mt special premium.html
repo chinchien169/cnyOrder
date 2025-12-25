@@ -1,0 +1,1228 @@
+<mt special premium html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT Special Pemium Order Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+        
+        .products-section {
+            border-right: 2px solid #e0e0e0;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+        
+        /* NEW: Filter tabs styling */
+        .filter-tabs {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .filter-tab:hover {
+            background: #fff3e0;
+            border-color: #d32f2f;
+        }
+        
+        .filter-tab.active {
+            background: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
+        }
+        
+        .filter-tab .en {
+            display: block;
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+        /* END of filter tabs styling */
+        
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table-header {
+            background: #d32f2f;
+            color: white;
+            position: sticky;
+            z-index: 9;
+        }
+        
+        .table-header th {
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #b71c1c;
+            font-size: 0.9em;
+        }
+        
+        .product-row {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .product-row:hover {
+            background: #fff3e0;
+        }
+        
+        .product-row td {
+            padding: 12px 8px;
+            border: 1px solid #e0e0e0;
+            vertical-align: middle;
+        }
+        
+        .code-cell {
+            font-weight: bold;
+            color: #d32f2f;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .no-cell {
+            text-align: center;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .item-cell {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .product-cell {
+            color: #555;
+        }
+        
+        .packing-cell {
+            text-align: center;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .price-cell {
+            text-align: right;
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1em;
+        }
+        
+        .order-cell {
+            text-align: center;
+            padding: 8px !important;
+        }
+        
+        .qty-input {
+            width: 60px;
+            padding: 6px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        
+        .qty-input:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+        
+        .add-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85em;
+            transition: all 0.3s;
+            margin-top: 4px;
+            width: 100%;
+        }
+        
+        .add-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+        
+        .cart-section {
+            background: #fafafa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            height: fit-content;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .cart-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cart-count {
+            background: #d32f2f;
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+        
+        .cart-empty {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-size: 1em;
+        }
+        
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-code {
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 0.9em;
+        }
+        
+        .cart-item-name {
+            font-size: 0.9em;
+            color: #333;
+            margin-top: 2px;
+        }
+        
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+        
+        .cart-item-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #666;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 8px;
+        }
+        
+        .cart-item-price {
+            text-align: right;
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1em;
+        }
+        
+        .cart-summary {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #d32f2f;
+            margin-bottom: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .summary-total {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #d32f2f;
+            padding-top: 10px;
+            border-top: 2px solid #d32f2f;
+        }
+        
+        .checkout-form {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .checkout-btn:hover {
+            background: #45a049;
+            transform: scale(1.02);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+            font-size: 0.9em;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 1200px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-section {
+                border-right: none;
+                border-bottom: 2px solid #e0e0e0;
+            }
+            
+            .cart-section {
+                position: static;
+                max-height: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-table {
+                font-size: 0.85em;
+            }
+            
+            .table-header th {
+                padding: 8px 4px;
+                font-size: 0.8em;
+            }
+            
+            .product-row td {
+                padding: 8px 4px;
+            }
+            
+            .qty-input {
+                width: 50px;
+                padding: 4px;
+            }
+            
+            .filter-tabs {
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .filter-tab {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧨 Kota Kemuning Winson CNY 2026 🧨</h1>
+            <p>MT Special Premium 订购单 Order Form</p>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="products-section">
+                <!-- NEW: Category filter tabs -->
+                <div class="filter-tabs">
+    <div class="filter-tab active" onclick="filterCategory('all')">
+        ALL 全部
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('五寸盆花系列')">
+        五寸盆花系列<span class="en">5 Inch Cake</span>
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('直上盆花系列')">
+        直上盆花系列<span class="en">Straight Up Cake</span>
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('异形VW盆花系列')">
+        异形VW盆花系列<span class="en">Special VW Cake</span>
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('限量精品盆花系列')">
+        限量精品盆花系列<span class="en">Limited Premium Cake</span>
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('国丰精品盆花系列')">
+        国丰精品盆花系列<span class="en">Guo Feng Premium</span>
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('鑫祥精品盆花系列')">
+        鑫祥精品盆花系列<span class="en">Xin Xiang Premium</span>
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('精品加特林1688系列')">
+        精品加特林1688系列<span class="en">Gatling 1688</span>
+    </div>
+
+    <div class="filter-tab" onclick="filterCategory('精品加特林盆花系列')">
+        精品加特林盆花系列<span class="en">Gatling Cake</span>
+    </div>
+</div>
+                <!-- END of filter tabs -->
+                
+                <table class="products-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th style="width: 10%;">CODE</th>
+                            <th style="width: 5%;">NO</th>
+                            <th style="width: 45%;">ITEM</th>
+                            <th style="width: 10%;">PACK</th>
+                            <th style="width: 15%;">PRICE</th>
+                            <th style="width: 15%;">ORDER</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="cart-section">
+                <div class="cart-title">
+                    购物车 Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                
+                <div id="cartContent">
+                    <div class="cart-empty">购物车是空的<br>Your cart is empty</div>
+                </div>
+                
+                <div id="checkoutSection" style="display: none;">
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span>小计 Subtotal:</span>
+                            <span id="subtotal">RM0.00</span>
+                        </div>
+                        <div class="summary-row summary-total">
+                            <span>总计 Total:</span>
+                            <span id="total">RM0.00</span>
+                        </div>
+                    </div>
+                    
+                    <form class="checkout-form" id="checkoutForm">
+                        <div class="form-group">
+                            <label for="customerName">姓名 Name *</label>
+                            <input type="text" id="customerName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customerPhone">电话 Phone *</label>
+                            <input type="tel" id="customerPhone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shippingAddress">地址 Address</label>
+                            <textarea id="shippingAddress" rows="2"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="checkout-btn" id="checkoutBtn">
+                            提交订单 Place Order
+                        </button>
+                    </form>
+                    
+                    <div id="message" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product catalog
+        let products = [];
+        let cart = [];
+        let currentFilter = 'all'; // NEW: Track current filter
+
+        // Webhook URL
+        const WEBHOOK_URL = 'https://chinchien169.app.n8n.cloud/webhook-test/a8919dca-d242-4780-927c-178e694b0853';
+
+        // Product data
+        function loadProductData() {
+            products = [
+  {
+    "id": 92,
+    "series": { "cn": "五寸盆花系列", "en": "5 Inch Cake Series" },
+    "orderCode": "IS-01",
+    "no": 1,
+    "item": "5“16 SHOTS CAKES Lucky Dragon",
+    "product": "5寸16发 龙行大运（金钛柳）",
+    "packing": "32/1",
+    "price": 680.00
+  },
+  {
+    "id": 93,
+    "series": { "cn": "五寸盆花系列", "en": "5 Inch Cake Series" },
+    "orderCode": "IS-02",
+    "no": 2,
+    "item": "5“25 SHOTS CAKES Dragon",
+    "product": "5寸25发 有龙则灵（金钛柳）",
+    "packing": "24/1",
+    "price": 730.00
+  },
+  {
+    "id": 94,
+    "series": { "cn": "五寸盆花系列", "en": "5 Inch Cake Series" },
+    "orderCode": "IS-03",
+    "no": 3,
+    "item": "5“36 SHOTS CAKES Dun Huang",
+    "product": "5寸36发 敦煌（金钛柳）",
+    "packing": "12/1",
+    "price": 620.00
+  },
+  {
+    "id": 95,
+    "series": { "cn": "五寸盆花系列", "en": "5 Inch Cake Series" },
+    "orderCode": "IS-04",
+    "no": 4,
+    "item": "5“49 SHOTS CAKES Splendid Land",
+    "product": "5寸49发 大好河山（金钛柳）",
+    "packing": "8/1",
+    "price": 590.00
+  },
+
+  {
+    "id": 96,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-01",
+    "no": 5,
+    "item": "1“ Hole , 7“100 SHOTS CAKES Whispering Wind",
+    "product": "1寸洞，7寸高100发 风清扬",
+    "packing": "2/1",
+    "price": 620.00
+  },
+  {
+    "id": 97,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-02",
+    "no": 6,
+    "item": "1“ Hole , 7“100 SHOTS CAKES Luminous Moon",
+    "product": "1寸洞，7寸高100发 琉璃月",
+    "packing": "2/1",
+    "price": 620.00
+  },
+  {
+    "id": 98,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-03",
+    "no": 7,
+    "item": "1“2 Hole , 9“100 SHOTS CAKES Blossom Rain",
+    "product": "1.2寸洞，9寸高100发 繁花雨",
+    "packing": "1/1",
+    "price": 622.00
+  },
+  {
+    "id": 99,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-04",
+    "no": 8,
+    "item": "1“2 Hole , 9“100 SHOTS CAKES Good Fortune Lion",
+    "product": "1.2寸洞，9寸高100发 狮狮如意",
+    "packing": "1/1",
+    "price": 630.00
+  },
+  {
+    "id": 100,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-05",
+    "no": 9,
+    "item": "1“2 Hole , 11“80 SHOTS CAKES Wealth & Health",
+    "product": "1.2寸洞，11寸高80发 鸿运",
+    "packing": "1/1",
+    "price": 583.00
+  },
+  {
+    "id": 101,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-06",
+    "no": 10,
+    "item": "1“2 Hole , 11“100 SHOTS CAKES Magical Night",
+    "product": "1.2寸洞，11寸高100发 超级魔音",
+    "packing": "1/1",
+    "price": 739.00
+  },
+  {
+    "id": 102,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-07",
+    "no": 11,
+    "item": "1“2 Hole , 11“100 SHOTS CAKES Fortune Datuk",
+    "product": "1.2寸洞，11寸高100发 姥爷保号",
+    "packing": "1/1",
+    "price": 680.00
+  },
+  {
+    "id": 103,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-08",
+    "no": 12,
+    "item": "1“2 Hole , 11“100 SHOTS CAKES Birdsong & Floral Fragrance",
+    "product": "1.2寸洞，11寸高100发 鸟语花香",
+    "packing": "1/1",
+    "price": 680.00
+  },
+  {
+    "id": 104,
+    "series": { "cn": "直上盆花系列", "en": "Straight Up Cake Series" },
+    "orderCode": "SUS-09",
+    "no": 13,
+    "item": "1“2 Hole , 12“100 SHOTS CAKES The Classic",
+    "product": "1.2寸洞，12寸高100发 烟花经典",
+    "packing": "1/1",
+    "price": 640.00
+  },
+
+  {
+    "id": 105,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-01",
+    "no": 14,
+    "item": "7“138 SHOTS CAKES Gliding Peaks",
+    "product": "7寸高138发 轻舟已过万重山",
+    "packing": "2/1",
+    "price": 790.00
+  },
+  {
+    "id": 106,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-02",
+    "no": 15,
+    "item": "1“2 Hole , 9“100 SHOTS CAKES Pink Romantic",
+    "product": "1.2寸洞，9寸高100发 粉色浪漫",
+    "packing": "1/1",
+    "price": 730.00
+  },
+  {
+    "id": 107,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-03",
+    "no": 16,
+    "item": "1“2 Hole , 9“138 SHOTS CAKES Pink Romantic Plus",
+    "product": "1.2寸洞，9寸高138发 粉色浪漫",
+    "packing": "1/1",
+    "price": 820.00
+  },
+  {
+    "id": 108,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-04",
+    "no": 17,
+    "item": "1“2 Hole , 10“138 SHOTS CAKES Blue River Plus",
+    "product": "1.2寸洞，10寸高138发 美太蓝",
+    "packing": "1/1",
+    "price": 770.00
+  },
+  {
+    "id": 109,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-05",
+    "no": 18,
+    "item": "1“ Hole , 11“70 SHOTS CAKES Blue Core",
+    "product": "1寸洞，11寸高70发 锦冠蓝芯",
+    "packing": "1/1",
+    "price": 620.00
+  },
+  {
+    "id": 110,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-06",
+    "no": 19,
+    "item": "1“ Hole , 11“70 SHOTS CAKES Red Petrel",
+    "product": "1寸洞，11寸高70发 九霄红燕",
+    "packing": "1/1",
+    "price": 615.00
+  },
+  {
+    "id": 111,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-07",
+    "no": 20,
+    "item": "1“ Hole , 11“90 SHOTS CAKES Whitebait",
+    "product": "1寸洞，11寸高90发 蓝星银鱼",
+    "packing": "1/1",
+    "price": 660.00
+  },
+  {
+    "id": 112,
+    "series": { "cn": "异形VW盆花系列", "en": "Special VW Cake Series" },
+    "orderCode": "VWS-08",
+    "no": 21,
+    "item": "1“2 Hole , 11.5“168 SHOTS CAKES Milan Night",
+    "product": "1.2寸洞，11.5寸高168发 米兰之夜",
+    "packing": "1/1",
+    "price": 930.00
+  },
+  {
+    "id": 113,
+    "series": { "cn": "限量精品盆花系列", "en": "Limited Premium Cake Series" },
+    "orderCode": "LPS-01",
+    "no": 22,
+    "item": "1“2 Hole , 9.5“138 SHOTS CAKES Reunion Pro",
+    "product": "1.2寸洞，9.5寸高138发 大团圆 Pro",
+    "packing": "1/1",
+    "price": 980.00
+  },
+  {
+    "id": 114,
+    "series": { "cn": "限量精品盆花系列", "en": "Limited Premium Cake Series" },
+    "orderCode": "LPS-02",
+    "no": 23,
+    "item": "1“2 + 2\" Hole , 11“99 SHOTS CAKES Age Of Water & Wood",
+    "product": "1.2寸+2寸洞，11寸高99发 水木年华",
+    "packing": "1/1",
+    "price": 860.00
+  },
+  {
+    "id": 115,
+    "series": { "cn": "限量精品盆花系列", "en": "Limited Premium Cake Series" },
+    "orderCode": "LPS-03",
+    "no": 24,
+    "item": "2” Hole , 14“42 SHOTS CAKES W Shape Dual Ring",
+    "product": "2寸洞，14寸高42发 W型双环",
+    "packing": "1/1",
+    "price": 930.00
+  },
+  {
+    "id": 116,
+    "series": { "cn": "限量精品盆花系列", "en": "Limited Premium Cake Series" },
+    "orderCode": "LPS-04",
+    "no": 25,
+    "item": "1“2 Hole , 11.5“258 SHOTS CAKES Milan Night Pro",
+    "product": "1.2寸洞，11寸高258发 米兰之夜 Pro",
+    "packing": "1/1",
+    "price": 1130.00
+  },
+  {
+    "id": 117,
+    "series": { "cn": "限量精品盆花系列", "en": "Limited Premium Cake Series" },
+    "orderCode": "LPS-05",
+    "no": 26,
+    "item": "1“2 Hole , 10“138 SHOTS CAKES Supreme 3 and Half Minutes Plus",
+    "product": "1.2寸洞，10寸高138发 至尊三分半 Plus",
+    "packing": "1/1",
+    "price": 750.00
+  },
+
+  {
+    "id": 118,
+    "series": { "cn": "国丰精品盆花系列", "en": "Guo Feng Premium Cake Series" },
+    "orderCode": "GFS-01",
+    "no": 27,
+    "item": "1“2 Hole , 12“128 SHOTS CAKES Sea & Sky One Colour",
+    "product": "1.2寸洞，12寸高128发 海天一色",
+    "packing": "1/1",
+    "price": 690.00
+  },
+  {
+    "id": 119,
+    "series": { "cn": "国丰精品盆花系列", "en": "Guo Feng Premium Cake Series" },
+    "orderCode": "GFS-02",
+    "no": 28,
+    "item": "1“2 Hole , 11“138 SHOTS CAKES Monkey King",
+    "product": "1.2寸洞，11寸高138发 齐天大圣",
+    "packing": "1/1",
+    "price": 680.00
+  },
+  {
+    "id": 120,
+    "series": { "cn": "国丰精品盆花系列", "en": "Guo Feng Premium Cake Series" },
+    "orderCode": "GFS-03",
+    "no": 29,
+    "item": "1“2 Hole , 11“88 SHOTS CAKES The Blue Planet",
+    "product": "1.2寸洞，11寸高88发 蓝色星球",
+    "packing": "1/1",
+    "price": 660.00
+  },
+  {
+    "id": 121,
+    "series": { "cn": "国丰精品盆花系列", "en": "Guo Feng Premium Cake Series" },
+    "orderCode": "GFS-04",
+    "no": 30,
+    "item": "1“2 Hole , 11“100 SHOTS CAKES The Challenge",
+    "product": "1.2寸洞，11寸高100发 谁与争锋",
+    "packing": "1/1",
+    "price": 750.00
+  },
+  {
+    "id": 122,
+    "series": { "cn": "国丰精品盆花系列", "en": "Guo Feng Premium Cake Series" },
+    "orderCode": "GFS-05",
+    "no": 31,
+    "item": "1“2 Hole , 11“188 SHOTS CAKES Stars & Then Great Sea",
+    "product": "1.2寸洞，11寸高188发 星辰大海",
+    "packing": "1/1",
+    "price": 830.00
+  },
+
+  {
+    "id": 123,
+    "series": { "cn": "鑫祥精品盆花系列", "en": "Xin Xiang Premium Cake Series" },
+    "orderCode": "XXS-01",
+    "no": 32,
+    "item": "1“2 Hole , 11“100 SHOTS CAKES Alien",
+    "product": "1.2寸洞，11寸高100发 异形",
+    "packing": "1/1",
+    "price": 650.00
+  },
+  {
+    "id": 124,
+    "series": { "cn": "鑫祥精品盆花系列", "en": "Xin Xiang Premium Cake Series" },
+    "orderCode": "XXS-02",
+    "no": 33,
+    "item": "1“2 Hole , 11“86 SHOTS CAKES Young Love",
+    "product": "1.2寸洞，11寸高86发 初恋",
+    "packing": "1/1",
+    "price": 650.00
+  },
+  {
+    "id": 125,
+    "series": { "cn": "鑫祥精品盆花系列", "en": "Xin Xiang Premium Cake Series" },
+    "orderCode": "XXS-03",
+    "no": 34,
+    "item": "1“2 Hole , 11“138 SHOTS CAKES Super Blue",
+    "product": "1.2寸洞，11寸高138发 超级蓝",
+    "packing": "1/1",
+    "price": 660.00
+  },
+  {
+    "id": 126,
+    "series": { "cn": "鑫祥精品盆花系列", "en": "Xin Xiang Premium Cake Series" },
+    "orderCode": "XXS-04",
+    "no": 35,
+    "item": "1“2 Hole , 9“188 SHOTS CAKES Extraodinary",
+    "product": "1.2寸洞，9寸高188发 非凡",
+    "packing": "1/1",
+    "price": 790.00
+  },
+
+  {
+    "id": 127,
+    "series": { "cn": "精品加特林1688系列", "en": "Premium Gatling 1688 Series" },
+    "orderCode": "PGS-01",
+    "no": 36,
+    "item": "Colour Storm (5 Effect) Black",
+    "product": "彩色风暴（5种特效）黑色",
+    "packing": "12/1",
+    "price": 680.00
+  },
+  {
+    "id": 128,
+    "series": { "cn": "精品加特林1688系列", "en": "Premium Gatling 1688 Series" },
+    "orderCode": "PGS-02",
+    "no": 37,
+    "item": "Seven Colour Cube (Orange,Pink,Blue,Green) Mix 4*3",
+    "product": "7彩魔方（橙，粉，蓝，绿）混色 4*3",
+    "packing": "12/1",
+    "price": 680.00
+  },
+
+  {
+    "id": 129,
+    "series": { "cn": "精品加特林盆花系列", "en": "Premium Gatling Cake Series" },
+    "orderCode": "PGCS-01",
+    "no": 38,
+    "item": "Sky Canopy",
+    "product": "天幕（三部曲）",
+    "packing": "12/1",
+    "price": 680.00
+  },
+  {
+    "id": 130,
+    "series": { "cn": "精品加特林盆花系列", "en": "Premium Gatling Cake Series" },
+    "orderCode": "PGCS-02",
+    "no": 39,
+    "item": "Starry River",
+    "product": "星河（三部曲）",
+    "packing": "12/1",
+    "price": 680.00
+  },
+  {
+    "id": 131,
+    "series": { "cn": "精品加特林盆花系列", "en": "Premium Gatling Cake Series" },
+    "orderCode": "PGCS-03",
+    "no": 40,
+    "item": "Flame Domain",
+    "product": "焰域（三部曲）",
+    "packing": "12/1",
+    "price": 680.00
+  }
+];
+            displayProducts();
+        }
+
+        // Display products in table
+	function displayProducts() {
+	    const tbody = document.getElementById('productsTableBody');
+	    tbody.innerHTML = '';
+
+	    const grouped = {};
+
+	    const filteredProducts = currentFilter === 'all'
+	        ? products
+	        : products.filter(p => p.series.cn === currentFilter);
+
+	    filteredProducts.forEach(p => {
+
+	        const key = p.series.en;
+	        if (!grouped[key]) grouped[key] = { ...p.series, items: [] };
+	        grouped[key].items.push(p);
+	    });
+
+	    Object.values(grouped).forEach(series => {
+
+	        const headerRow = document.createElement('tr');
+	        headerRow.innerHTML = `
+	            <td colspan="6" style="
+	                background:#f5f5f5;
+	                padding:14px 18px;
+	                border-top:3px solid #d32f2f;
+	            ">
+	                <div style="font-size:1.2em;font-weight:bold;color:#d32f2f;">
+	                    ${series.cn}
+	                </div>
+	                <div style="font-size:0.95em;color:#666;">
+	                    ${series.en}
+	                </div>
+	            </td>
+	        `;
+	        tbody.appendChild(headerRow);
+
+	        series.items.forEach(product => {
+	            const row = document.createElement('tr');
+	            row.className = 'product-row';
+	            row.innerHTML = `
+	                <td class="code-cell">${product.orderCode}</td>
+	                <td class="no-cell">${product.no}</td>
+	                <td class="item-cell">
+	                    ${product.item}<br>${product.product}
+	                </td>
+	                <td class="packing-cell">${product.packing}</td>
+	                <td class="price-cell">RM${product.price.toFixed(2)}</td>
+	                <td class="order-cell">
+	                    <input type="number" id="qty-${product.id}" class="qty-input" value="0" min="0">
+	                    <button class="add-btn" onclick="addToCart(${product.id})">添加 Add (+)</button>
+	                </td>
+	            `;
+	            tbody.appendChild(row);
+	        });
+	    });
+	}
+
+	function filterCategory(category) {
+	    currentFilter = category;
+
+	    // Update tab active state
+	    document.querySelectorAll('.filter-tab').forEach(tab => {
+	        tab.classList.remove('active');
+	    });
+
+	    event.target.classList.add('active');
+
+	    displayProducts();
+	}
+
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const quantity = parseInt(document.getElementById(`qty-${productId}`).value);
+            
+            if (quantity <= 0) {
+                alert('请输入数量 Please enter quantity');
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: quantity
+                });
+            }
+            
+            updateCart();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            document.getElementById(`qty-${productId}`).value = 0;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartContent = document.getElementById('cartContent');
+            const cartCount = document.getElementById('cartCount');
+            const checkoutSection = document.getElementById('checkoutSection');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = '<div class="cart-empty">购物车是空的<br>Your cart is empty</div>';
+                checkoutSection.style.display = 'none';
+                return;
+            }
+            
+            checkoutSection.style.display = 'block';
+            
+            const cartHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <div>
+                            <div class="cart-item-code">${item.orderCode}</div>
+                            <div class="cart-item-name">${item.item}</div>
+                            <div class="cart-item-name">${item.product}</div>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">删除 Remove (-)</button>
+                    </div>
+                    <div class="cart-item-details">
+                        <span>数量: ${item.quantity} × RM${item.price.toFixed(2)}</span>
+                        <span class="cart-item-price">RM${(item.quantity * item.price).toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            cartContent.innerHTML = `<div class="cart-items">${cartHTML}</div>`;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            document.getElementById('subtotal').textContent = `RM${subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `RM${subtotal.toFixed(2)}`;
+        }
+
+        // Handle checkout
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const messageDiv = document.getElementById('message');
+            
+            checkoutBtn.disabled = true;
+            checkoutBtn.textContent = '处理中... Processing...';
+            messageDiv.style.display = 'none';
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const orderData = {
+                orderNumber: 'ORD-' + Date.now(),
+                timestamp: new Date().toISOString(),
+                customer: {
+                    name: document.getElementById('customerName').value,
+                    phone: document.getElementById('customerPhone').value,
+                    address: document.getElementById('shippingAddress').value
+                },
+                items: cart.map(item => ({
+                    orderCode: item.orderCode,
+                    productId: item.id,
+                    itemName: item.item,
+                    productName: item.product,
+                    packing: item.packing,
+                    price: item.price,
+                    quantity: item.quantity,
+                    subtotal: item.price * item.quantity
+                })),
+                summary: {
+                    subtotal: subtotal,
+                    total: subtotal
+                }
+            };
+            
+            console.log('Order Data:', orderData);
+            
+            if (WEBHOOK_URL === 'https://chinchien169.app.n8n.cloud/webhook/a8919dca-d242-4780-927c-178e694b0853') {
+                messageDiv.textContent = '演示模式：请在控制台查看订单数据。配置webhook URL以提交订单。\nDemo mode: Check console for order data. Configure webhook URL to submit orders.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = '提交订单 Place Order';
+                return;
+            }
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                
+                if (response.ok) {
+                    messageDiv.textContent = `订单提交成功！Order placed successfully! Order #${orderData.orderNumber}`;
+                    messageDiv.className = 'message success';
+                    messageDiv.style.display = 'block';
+                    
+                    // Clear cart and form
+                    cart = [];
+                    products.forEach(p => {
+                        const input = document.getElementById(`qty-${p.id}`);
+                        if (input) input.value = 0;
+                    });
+                    updateCart();
+                    document.getElementById('checkoutForm').reset();
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = '提交订单时出错。请重试。\nError placing order. Please try again.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+            } finally {
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = '提交订单 Place Order';
+            }
+        });
+
+        // Initialize
+        loadProductData();
+    </script>
+
+</body>
+</html>
