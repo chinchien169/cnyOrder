@@ -577,7 +577,7 @@
         let currentFilter = 'all'; // NEW: Track current filter
 
         // Webhook URL
-        const WEBHOOK_URL = 'https://chinchien169.app.n8n.cloud/webhook-test/a8919dca-d242-4780-927c-178e694b0853';
+        const WEBHOOK_URL = 'https://chinchien169.app.n8n.cloud/webhook/a8919dca-d242-4780-927c-178e694b0853';
 
         // Product data
         function loadProductData() {
@@ -1177,7 +1177,7 @@
             
             console.log('Order Data:', orderData);
             
-            if (WEBHOOK_URL === 'https://chinchien169.app.n8n.cloud/webhook/a8919dca-d242-4780-927c-178e694b0853') {
+            if (WEBHOOK_URL === 'none') {
                 messageDiv.textContent = '演示模式：请在控制台查看订单数据。配置webhook URL以提交订单。\nDemo mode: Check console for order data. Configure webhook URL to submit orders.';
                 messageDiv.className = 'message error';
                 messageDiv.style.display = 'block';
