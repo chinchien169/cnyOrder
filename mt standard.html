@@ -266,7 +266,7 @@
             font-size: 0.9em;
         }
         
-        .cart-item-name {
+        .cart-item- {
             font-size: 0.9em;
             color: #333;
             margin-top: 2px;
@@ -711,7 +711,7 @@
 
 	        series.items.forEach(product => {
 	            const row = document.createElement('tr');
-	            row.className = 'product-row';
+	            row.class = 'product-row';
 	            row.innerHTML = `
 	                <td class="code-cell">${product.orderCode}</td>
 	                <td class="no-cell">${product.no}</td>
@@ -794,8 +794,8 @@
                     <div class="cart-item-header">
                         <div>
                             <div class="cart-item-code">${item.orderCode}</div>
-                            <div class="cart-item-name">${item.item}</div>
-                            <div class="cart-item-name">${item.product}</div>
+                            <div class="cart-item-">${item.item}</div>
+                            <div class="cart-item-">${item.product}</div>
                         </div>
                         <button class="remove-btn" onclick="removeFromCart(${item.id})">删除 Remove (-)</button>
                     </div>
@@ -835,7 +835,7 @@
                 orderNumber: 'ORD-' + Date.now(),
                 timestamp: new Date().toISOString(),
                 customer: {
-                    name: document.getElementById('customerCode').value,
+                    code: document.getElementById('customerCode').value,
                     phone: document.getElementById('customerPhone').value,
                     address: document.getElementById('shippingAddress').value
                 },
@@ -908,6 +908,7 @@
 
 </body>
 </html>
+
 
 
 
