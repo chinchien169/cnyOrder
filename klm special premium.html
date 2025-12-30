@@ -1,0 +1,2847 @@
+<klm special premium html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KLM Special Pemium Order Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0;
+            min-height: 600px;
+        }
+        
+        .products-section {
+            border-right: 2px solid #e0e0e0;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+        
+        /* NEW: Filter tabs styling */
+        .filter-tabs {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .filter-tab:hover {
+            background: #fff3e0;
+            border-color: #d32f2f;
+        }
+        
+        .filter-tab.active {
+            background: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
+        }
+        
+        .filter-tab .en {
+            display: block;
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+        /* END of filter tabs styling */
+        
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table-header {
+            background: #d32f2f;
+            color: white;
+            position: sticky;
+            z-index: 9;
+        }
+        
+        .table-header th {
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #b71c1c;
+            font-size: 0.9em;
+        }
+        
+        .product-row {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .product-row:hover {
+            background: #fff3e0;
+        }
+        
+        .product-row td {
+            padding: 12px 8px;
+            border: 1px solid #e0e0e0;
+            vertical-align: middle;
+        }
+        
+        .code-cell {
+            font-weight: bold;
+            color: #d32f2f;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        
+        .no-cell {
+            text-align: center;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .item-cell {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .product-cell {
+            color: #555;
+        }
+        
+        .packing-cell {
+            text-align: center;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .price-cell {
+            text-align: right;
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1em;
+        }
+        
+        .order-cell {
+            text-align: center;
+            padding: 8px !important;
+        }
+        
+        .qty-input {
+            width: 60px;
+            padding: 6px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+        }
+        
+        .qty-input:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+        
+        .add-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85em;
+            transition: all 0.3s;
+            margin-top: 4px;
+            width: 100%;
+        }
+        
+        .add-btn:hover {
+            background: #b71c1c;
+            transform: scale(1.05);
+        }
+        
+        .cart-section {
+            background: #fafafa;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            height: fit-content;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        
+        .cart-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cart-count {
+            background: #d32f2f;
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+        }
+        
+        .cart-empty {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-size: 1em;
+        }
+        
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        
+        .cart-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-code {
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 0.9em;
+        }
+        
+        .cart-item-name {
+            font-size: 0.9em;
+            color: #333;
+            margin-top: 2px;
+        }
+        
+        .remove-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .remove-btn:hover {
+            background: #d32f2f;
+        }
+        
+        .cart-item-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #666;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 8px;
+        }
+        
+        .cart-item-price {
+            text-align: right;
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1em;
+        }
+        
+        .cart-summary {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #d32f2f;
+            margin-bottom: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .summary-total {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #d32f2f;
+            padding-top: 10px;
+            border-top: 2px solid #d32f2f;
+        }
+        
+        .checkout-form {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .checkout-btn:hover {
+            background: #45a049;
+            transform: scale(1.02);
+        }
+        
+        .checkout-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+            font-size: 0.9em;
+        }
+        
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 1200px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-section {
+                border-right: none;
+                border-bottom: 2px solid #e0e0e0;
+            }
+            
+            .cart-section {
+                position: static;
+                max-height: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .products-table {
+                font-size: 0.85em;
+            }
+            
+            .table-header th {
+                padding: 8px 4px;
+                font-size: 0.8em;
+            }
+            
+            .product-row td {
+                padding: 8px 4px;
+            }
+            
+            .qty-input {
+                width: 50px;
+                padding: 4px;
+            }
+            
+            .filter-tabs {
+                gap: 10px;
+                padding: 15px;
+            }
+            
+            .filter-tab {
+                padding: 8px 16px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+	<a href="index.html" style="text-decoration:none;color:inherit;">
+        <div class="header">
+            <h1>🧨 Kota Kemuning Winson CNY 2026 🧨</h1>
+            <p>KLM Special Premium 订购单 Order Form</p>
+        </div>
+	</a>
+        
+        <div class="content-wrapper">
+            <div class="products-section">
+                <!-- NEW: Category filter tabs -->
+                <div class="filter-tabs">
+<div class="filter-tab active" onclick="filterCategory('all')">
+    ALL 全部
+</div>
+<div class="filter-tab" onclick="filterCategory('辉跃系列')">
+    辉跃系列<span class="en">HY Series</span>
+</div>
+<div class="filter-tab" onclick="filterCategory('PS 英雄系列')">
+    PS 英雄系列<span class="en">Hero Series</span>
+</div>
+<div class="filter-tab" onclick="filterCategory('SW 系列')">
+    SW 系列<span class="en">SW Series</span>
+</div>
+<div class="filter-tab" onclick="filterCategory('PANDA 系列')">
+    PANDA 系列<span class="en">Panda Series</span>
+</div>
+<div class="filter-tab" onclick="filterCategory('盆花系列')">
+    盆花系列<span class="en">Fan Cake Series</span>
+</div>
+<div class="filter-tab" onclick="filterCategory('SV 系列 一')">
+    SV 系列 一<span class="en">SV Series 1</span>
+</div>
+<div class="filter-tab" onclick="filterCategory('SV 系列二')">
+    SV 系列二<span class="en">SV Series 2</span>
+</div>
+<div class="filter-tab" onclick="filterCategory('SV 系列三')">
+    SV 系列三<span class="en">SV Series 3</span>
+</div>
+</div>
+                <!-- END of filter tabs -->
+                
+                <table class="products-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th style="width: 10%;">CODE</th>
+                            <th style="width: 5%;">NO</th>
+                            <th style="width: 45%;">ITEM</th>
+                            <th style="width: 10%;">PACK</th>
+                            <th style="width: 15%;">PRICE</th>
+                            <th style="width: 15%;">ORDER</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="cart-section">
+                <div class="cart-title">
+                    购物车 Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                
+                <div id="cartContent">
+                    <div class="cart-empty">购物车是空的<br>Your cart is empty</div>
+                </div>
+                
+                <div id="checkoutSection" style="display: none;">
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span>小计 Subtotal:</span>
+                            <span id="subtotal">RM0.00</span>
+                        </div>
+                        <div class="summary-row summary-total">
+                            <span>总计 Total:</span>
+                            <span id="total">RM0.00</span>
+                        </div>
+                    </div>
+                    
+                    <form class="checkout-form" id="checkoutForm">
+                        <div class="form-group">
+                            <label for="customerCode">客户代号 Customer Code *</label>
+                            <input type="text" id="customerCode" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="customerPhone">电话 Phone</label>
+                            <input type="tel" id="customerPhone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="shippingAddress">地址 Address</label>
+                            <textarea id="shippingAddress" rows="2"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="checkout-btn" id="checkoutBtn">
+                            提交订单 Place Order
+                        </button>
+                    </form>
+                    
+                    <div id="message" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product catalog
+        let products = [];
+        let cart = [];
+        let currentFilter = 'all'; // NEW: Track current filter
+
+        // Webhook URL
+        const WEBHOOK_URL = 'https://chinchien169.app.n8n.cloud/webhook/a8919dca-d242-4780-927c-178e694b0853';
+
+        // Product data
+        function loadProductData() {
+            products = [
+  {
+    "id": 256,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY01",
+    "no": 1,
+    "item": "10\"276 V2",
+    "product": "辉跃大师 -AB 款",
+    "packing": "1/1",
+    "price": 2130.00
+  },
+  {
+    "id": 257,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY02",
+    "no": 2,
+    "item": "9\"414 ABC",
+    "product": "烟花很忙套餐",
+    "packing": "3/1",
+    "price": 860.00
+  },
+  {
+    "id": 258,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY03",
+    "no": 3,
+    "item": "KING 138",
+    "product": "至尊138 - 一代天骄 (1.5)",
+    "packing": "1/1",
+    "price": 485.00
+  },
+  {
+    "id": 259,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY04",
+    "no": 4,
+    "item": "KING 138",
+    "product": "至尊138 -草原雄鹰 (1.5)",
+    "packing": "1/1",
+    "price": 485.00
+  },
+  {
+    "id": 260,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY05",
+    "no": 5,
+    "item": "11\"138",
+    "product": "戏出东方（紫色）",
+    "packing": "1/1",
+    "price": 505.00
+  },
+  {
+    "id": 261,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY06",
+    "no": 6,
+    "item": "10\"138",
+    "product": "戏出东方（红色）",
+    "packing": "1/1",
+    "price": 500.00
+  },
+  {
+    "id": 262,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY07",
+    "no": 7,
+    "item": "10\"138 V2",
+    "product": "迎蓝而上  (升级版）",
+    "packing": "1/1",
+    "price": 515.00
+  },
+  {
+    "id": 263,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY08",
+    "no": 8,
+    "item": "10\"138 V2",
+    "product": "蓝明星  (升级版）",
+    "packing": "1/1",
+    "price": 550.00
+  },
+  {
+    "id": 264,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY09",
+    "no": 9,
+    "item": "10\"138 V2",
+    "product": "彩云之蓝 (升级版）",
+    "packing": "1/1",
+    "price": 555.00
+  },
+  {
+    "id": 265,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY10",
+    "no": 10,
+    "item": "10\"138 V2",
+    "product": "四朵金花",
+    "packing": "1/1",
+    "price": 460.00
+  },
+  {
+    "id": 266,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY11",
+    "no": 11,
+    "item": "10\"138 V2",
+    "product": "芭蕾姐妹",
+    "packing": "1/1",
+    "price": 460.00
+  },
+  {
+    "id": 267,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY12",
+    "no": 12,
+    "item": "10\"138 V2",
+    "product": "梦幻蝴蝶 (全扇)",
+    "packing": "1/1",
+    "price": 515.00
+  },
+  {
+    "id": 268,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY13",
+    "no": 13,
+    "item": "10\"138",
+    "product": "星空画家  (2分钟)",
+    "packing": "1/1",
+    "price": 460.00
+  },
+  {
+    "id": 269,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY14",
+    "no": 14,
+    "item": "10\"138",
+    "product": "喜悦 (3分钟)",
+    "packing": "1/1",
+    "price": 440.00
+  },
+  {
+    "id": 270,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY15",
+    "no": 15,
+    "item": "10\"138 V2",
+    "product": "四大名铺  (金蜘蛛)",
+    "packing": "1/1",
+    "price": 450.00
+  },
+  {
+    "id": 271,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY16",
+    "no": 16,
+    "item": "10\"138 V2",
+    "product": "超燃",
+    "packing": "1/1",
+    "price": 460.00
+  },
+  {
+    "id": 272,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY17",
+    "no": 17,
+    "item": "10\"138 V2",
+    "product": "辉跃向阳花",
+    "packing": "1/1",
+    "price": 460.00
+  },
+  {
+    "id": 273,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY18",
+    "no": 18,
+    "item": "10\"138 V2",
+    "product": "追光者",
+    "packing": "1/1",
+    "price": 570.00
+  },
+  {
+    "id": 274,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY19",
+    "no": 19,
+    "item": "10\"138",
+    "product": "焰火传奇 (2分钟)",
+    "packing": "1/1",
+    "price": 365.00
+  },
+  {
+    "id": 275,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY20",
+    "no": 20,
+    "item": "11\"138",
+    "product": "辉跃魔笛  (魔音开花3D)",
+    "packing": "1/1",
+    "price": 425.00
+  },
+  {
+    "id": 276,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY21",
+    "no": 21,
+    "item": "9\"276 V2",
+    "product": "多彩辉跃 AB款 (臻品)",
+    "packing": "1/1",
+    "price": 640.00
+  },
+  {
+    "id": 277,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY22",
+    "no": 22,
+    "item": "9\"138 V2",
+    "product": "十里桃花  (臻品)",
+    "packing": "1/1",
+    "price": 370.00
+  },
+  {
+    "id": 278,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY23",
+    "no": 23,
+    "item": "10\"138 V2",
+    "product": "十里桃花 - 升级版",
+    "packing": "1/1",
+    "price": 500.00
+  },
+  {
+    "id": 279,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY24",
+    "no": 24,
+    "item": "9\"138 V2",
+    "product": "辉跃游星  (臻品)",
+    "packing": "1/1",
+    "price": 350.00
+  },
+  {
+    "id": 280,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY25",
+    "no": 25,
+    "item": "9\"138 V2",
+    "product": "辉跃四瑞  (臻品)",
+    "packing": "1/1",
+    "price": 370.00
+  },
+  {
+    "id": 281,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY26",
+    "no": 26,
+    "item": "9\"138 V2",
+    "product": "恭喜发财 (臻品) (全扇)",
+    "packing": "1/1",
+    "price": 370.00
+  },
+  {
+    "id": 282,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY27",
+    "no": 27,
+    "item": "9\"138 V2",
+    "product": "辉跃黄金甲  (臻品)",
+    "packing": "1/1",
+    "price": 400.00
+  },
+  {
+    "id": 283,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY28",
+    "no": 28,
+    "item": "10\"98",
+    "product": "暖蓝",
+    "packing": "1/1",
+    "price": 355.00
+  },
+  {
+    "id": 284,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY29",
+    "no": 29,
+    "item": "10\"138",
+    "product": "冠军梦",
+    "packing": "1/1",
+    "price": 405.00
+  },
+  {
+    "id": 285,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY30",
+    "no": 30,
+    "item": "10\"138 V2",
+    "product": "大丰收 (全扇)",
+    "packing": "1/1",
+    "price": 530.00
+  },
+  {
+    "id": 286,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY31",
+    "no": 31,
+    "item": "10\"138 V2",
+    "product": "火凤凰 (全扇)",
+    "packing": "1/1",
+    "price": 530.00
+  },
+  {
+    "id": 287,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY32",
+    "no": 32,
+    "item": "10\"138 V2",
+    "product": "龙舟精神",
+    "packing": "1/1",
+    "price": 530.00
+  },
+  {
+    "id": 288,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY33",
+    "no": 33,
+    "item": "10\"138 V2",
+    "product": "中华战舞",
+    "packing": "1/1",
+    "price": 580.00
+  },
+  {
+    "id": 289,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY34",
+    "no": 34,
+    "item": "10\"138 V2",
+    "product": "白月光",
+    "packing": "1/1",
+    "price": 525.00
+  },
+  {
+    "id": 290,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY35",
+    "no": 35,
+    "item": "10\"138 V2",
+    "product": "青溪",
+    "packing": "1/1",
+    "price": 535.00
+  },
+  {
+    "id": 291,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY36",
+    "no": 36,
+    "item": "10\"138 V2",
+    "product": "醒狮",
+    "packing": "1/1",
+    "price": 535.00
+  },
+  {
+    "id": 292,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY37",
+    "no": 37,
+    "item": "10\"138 V2",
+    "product": "秋天童话",
+    "packing": "1/1",
+    "price": 475.00
+  },
+  {
+    "id": 293,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY38",
+    "no": 38,
+    "item": "10\"138 V2",
+    "product": "天公保庇",
+    "packing": "1/1",
+    "price": 535.00
+  },
+  {
+    "id": 294,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY39",
+    "no": 39,
+    "item": "10\"138 V2",
+    "product": "空中芭蕾",
+    "packing": "1/1",
+    "price": 515.00
+  },
+  {
+    "id": 295,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY40",
+    "no": 40,
+    "item": "10\"138 V2",
+    "product": "幸会",
+    "packing": "1/1",
+    "price": 475.00
+  },
+  {
+    "id": 296,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY41",
+    "no": 41,
+    "item": "10\"138 V2",
+    "product": "与狼共舞",
+    "packing": "1/1",
+    "price": 465.00
+  },
+  {
+    "id": 297,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY42",
+    "no": 42,
+    "item": "10\"138 V2",
+    "product": "常胜将军",
+    "packing": "1/1",
+    "price": 545.00
+  },
+  {
+    "id": 298,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY43",
+    "no": 43,
+    "item": "10\"138 V2",
+    "product": "霸王花",
+    "packing": "1/1",
+    "price": 535.00
+  },
+  {
+    "id": 299,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY44",
+    "no": 44,
+    "item": "10\"138 V2",
+    "product": "忠义双全",
+    "packing": "1/1",
+    "price": 520.00
+  },
+  {
+    "id": 300,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY45",
+    "no": 45,
+    "item": "10\"138 V2",
+    "product": "金冠王",
+    "packing": "1/1",
+    "price": 500.00
+  },
+  {
+    "id": 301,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY46",
+    "no": 46,
+    "item": "10\"138 V2",
+    "product": "大赚顺",
+    "packing": "1/1",
+    "price": 540.00
+  },
+  {
+    "id": 302,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY47",
+    "no": 47,
+    "item": "10\"138 V2",
+    "product": "猛龙过江",
+    "packing": "1/1",
+    "price": 555.00
+  },
+  {
+    "id": 303,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY48",
+    "no": 48,
+    "item": "KING 138",
+    "product": "至尊138发 - 天龙八部 -凌波微步",
+    "packing": "1/1",
+    "price": 560.00
+  },
+  {
+    "id": 304,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY49",
+    "no": 49,
+    "item": "KING 138",
+    "product": "至尊138发天龙八部 -六脉神剑",
+    "packing": "1/1",
+    "price": 550.00
+  },
+  {
+    "id": 305,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY50",
+    "no": 50,
+    "item": "KING 138",
+    "product": "至尊138发天龙八部 -周公剑法",
+    "packing": "1/1",
+    "price": 540.00
+  },
+  {
+    "id": 306,
+    "series": { "cn": "辉跃系列", "en": "HY Series" },
+    "orderCode": "HY51",
+    "no": 51,
+    "item": "KING 138",
+    "product": "至尊138发至尊天龙八部 -降龙十八掌",
+    "packing": "1/1",
+    "price": 540.00
+  },
+  {
+    "id": 307,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS100",
+    "no": 52,
+    "item": "10\"138",
+    "product": "秦始皇 (升级版）",
+    "packing": "1/1",
+    "price": 510.00
+  },
+  {
+    "id": 308,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS101",
+    "no": 53,
+    "item": "10\"138 V",
+    "product": "武则天 (升级版）",
+    "packing": "1/1",
+    "price": 480.00
+  },
+  {
+    "id": 309,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS102",
+    "no": 54,
+    "item": "10\"138 V",
+    "product": "花木兰",
+    "packing": "1/1",
+    "price": 415.00
+  },
+  {
+    "id": 310,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS103",
+    "no": 55,
+    "item": "10\"138 V",
+    "product": "穆桂英",
+    "packing": "1/1",
+    "price": 440.00
+  },
+  {
+    "id": 311,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS104",
+    "no": 56,
+    "item": "10\"138 V",
+    "product": "西楚霸王",
+    "packing": "1/1",
+    "price": 470.00
+  },
+  {
+    "id": 312,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS105",
+    "no": 57,
+    "item": "10\"138 V",
+    "product": "曹操",
+    "packing": "1/1",
+    "price": 420.00
+  },
+  {
+    "id": 313,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS106",
+    "no": 58,
+    "item": "10\"138 V",
+    "product": "成吉思汗 (升级版）",
+    "packing": "1/1",
+    "price": 500.00
+  },
+  {
+    "id": 314,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS107",
+    "no": 59,
+    "item": "10\"138 V",
+    "product": "樊梨花",
+    "packing": "1/1",
+    "price": 455.00
+  },
+  {
+    "id": 315,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS108",
+    "no": 60,
+    "item": "8\"138 V",
+    "product": "赵子龙",
+    "packing": "1/1",
+    "price": 395.00
+  },
+  {
+    "id": 316,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS109",
+    "no": 61,
+    "item": "11\"36",
+    "product": "飞天红狼 (红魔音）",
+    "packing": "4/1",
+    "price": 505.00
+  },
+  {
+    "id": 317,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS110",
+    "no": 62,
+    "item": "1049",
+    "product": "狼王狂飙 (大魔音）",
+    "packing": "4/1",
+    "price": 515.00
+  },
+  {
+    "id": 318,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS111",
+    "no": 63,
+    "item": "10\"138 V",
+    "product": "梁红玉",
+    "packing": "1/1",
+    "price": 515.00
+  },
+  {
+    "id": 319,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS112",
+    "no": 64,
+    "item": "10\"138 V",
+    "product": "孙武",
+    "packing": "1/1",
+    "price": 525.00
+  },
+  {
+    "id": 320,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS113",
+    "no": 65,
+    "item": "10\"138 V",
+    "product": "李靖",
+    "packing": "1/1",
+    "price": 520.00
+  },
+  {
+    "id": 321,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS114",
+    "no": 66,
+    "item": "10\"138 V",
+    "product": "平阳昭公主",
+    "packing": "1/1",
+    "price": 530.00
+  },
+  {
+    "id": 322,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS115",
+    "no": 67,
+    "item": "10\"138 V",
+    "product": "秦良玉",
+    "packing": "1/1",
+    "price": 520.00
+  },
+  {
+    "id": 323,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS116",
+    "no": 68,
+    "item": "10\"138 V",
+    "product": "白起",
+    "packing": "1/1",
+    "price": 515.00
+  },
+  {
+    "id": 324,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS117",
+    "no": 69,
+    "item": "10\"138 V",
+    "product": "吕布",
+    "packing": "1/1",
+    "price": 520.00
+  },
+  {
+    "id": 325,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS118",
+    "no": 70,
+    "item": "10\"138 V",
+    "product": "岳飞",
+    "packing": "1/1",
+    "price": 510.00
+  },
+  {
+    "id": 326,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS119",
+    "no": 71,
+    "item": "10\"138 V",
+    "product": "韩信",
+    "packing": "1/1",
+    "price": 525.00
+  },
+  {
+    "id": 327,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS120",
+    "no": 72,
+    "item": "11\"138",
+    "product": "至尊 关云长 （直上）",
+    "packing": "1/1",
+    "price": 575.00
+  },
+  {
+    "id": 328,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS121",
+    "no": 73,
+    "item": "10\"138",
+    "product": "司马懿 （直上）",
+    "packing": "1/1",
+    "price": 480.00
+  },
+  {
+    "id": 329,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS122",
+    "no": 74,
+    "item": "10\"138 V",
+    "product": "至尊 妇好",
+    "packing": "1/1",
+    "price": 535.00
+  },
+  {
+    "id": 330,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS123",
+    "no": 75,
+    "item": "10\"138",
+    "product": "刘备 （直上）",
+    "packing": "1/1",
+    "price": 435.00
+  },
+  {
+    "id": 331,
+    "series": { "cn": "PS 英雄系列", "en": "Hero Series" },
+    "orderCode": "PS124",
+    "no": 76,
+    "item": "10\"138 V",
+    "product": "张飞  (全扇)",
+    "packing": "1/1",
+    "price": 520.00
+  },
+  {
+    "id": 332,
+    "series": { "cn": "SW 系列", "en": "SW Series" },
+    "orderCode": "SW 200",
+    "no": 77,
+    "item": "KING 10\"138 V",
+    "product": "王昭君 -  至尊 (升级版）",
+    "packing": "1/1",
+"price": 580.00
+},
+{
+"id": 333,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 201",
+"no": 78,
+"item": "KING 10"138 V",
+"product": "貂蝉 - 至尊+祥云（升级版）",
+"packing": "1/1",
+"price": 605.00
+},
+{
+"id": 334,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 202",
+"no": 79,
+"item": "10"138 V",
+"product": "杨玉环",
+"packing": "1/1",
+"price": 490.00
+},
+{
+"id": 335,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 203",
+"no": 80,
+"item": "10"138 V",
+"product": "西施",
+"packing": "1/1",
+"price": 550.00
+},
+{
+"id": 336,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 204",
+"no": 81,
+"item": "12"138 V",
+"product": "心愿向日葵",
+"packing": "1/1",
+"price": 560.00
+},
+{
+"id": 337,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 205",
+"no": 82,
+"item": "10"138 V",
+"product": "诚愿稻穗花",
+"packing": "1/1",
+"price": 495.00
+},
+{
+"id": 338,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 206",
+"no": 83,
+"item": "KING 10"138 V",
+"product": "至尊 -悟空",
+"packing": "1/1",
+"price": 580.00
+},
+{
+"id": 339,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 207",
+"no": 84,
+"item": "9"138 O",
+"product": "138 发大团圆",
+"packing": "1/1",
+"price": 660.00
+},
+{
+"id": 340,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 208",
+"no": 85,
+"item": "10"138 V",
+"product": "六指琴魔 (魔音)",
+"packing": "1/1",
+"price": null
+},
+{
+"id": 341,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 209",
+"no": 86,
+"item": "KING 10"138 V",
+"product": "至尊 -暴富",
+"packing": "1/1",
+"price": 480.00
+},
+{
+"id": 342,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 210",
+"no": 87,
+"item": "12"98",
+"product": "金刚狼 (金钻魔音)",
+"packing": "1/1",
+"price": 400.00
+},
+{
+"id": 343,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 211",
+"no": 88,
+"item": "12"98",
+"product": "射天狼 AB款- (金太柳魔音)",
+"packing": "1/1",
+"price": 400.00
+},
+{
+"id": 344,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 212",
+"no": 89,
+"item": "10"138",
+"product": "金椰王中王",
+"packing": "1/1",
+"price": 395.00
+},
+{
+"id": 345,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW 213",
+"no": 90,
+"item": "11"138",
+"product": "至尊 - 金波彩椰王",
+"packing": "1/1",
+"price": null
+},
+{
+"id": 346,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW214",
+"no": 91,
+"item": "KING",
+"product": "至尊 -金波彩椰王 （升级版）",
+"packing": "1/1",
+"price": 535.00
+},
+{
+"id": 347,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW215",
+"no": 92,
+"item": "9"138 V",
+"product": "四大财子系列 比干",
+"packing": "1/1",
+"price": 490.00
+},
+{
+"id": 348,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW216",
+"no": 93,
+"item": "9"138 V",
+"product": "四大财子系列 关羽",
+"packing": "1/1",
+"price": 510.00
+},
+{
+"id": 349,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW217",
+"no": 94,
+"item": "9"138 V",
+"product": "四大财子系列 范蠡",
+"packing": "1/1",
+"price": 500.00
+},
+{
+"id": 350,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW218",
+"no": 95,
+"item": "10"138 V",
+"product": "四大财子系列 赵公明",
+"packing": "1/1",
+"price": 520.00
+},
+{
+"id": 351,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW219",
+"no": 96,
+"item": "9"138 V",
+"product": "四大神兽 -玄武",
+"packing": "1/1",
+"price": 450.00
+},
+{
+"id": 352,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW220",
+"no": 97,
+"item": "9"138 V",
+"product": "四大神兽 -白虎",
+"packing": "1/1",
+"price": 425.00
+},
+{
+"id": 353,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW221",
+"no": 98,
+"item": "9"138 V",
+"product": "四大神兽 -青龙",
+"packing": "1/1",
+"price": 410.00
+},
+{
+"id": 354,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW222",
+"no": 99,
+"item": "9"138 V",
+"product": "四大神兽 -朱雀",
+"packing": "1/1",
+"price": 460.00
+},
+{
+"id": 355,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW223",
+"no": 100,
+"item": "10"138 V",
+"product": "宝石蓝",
+"packing": "1/1",
+"price": 485.00
+},
+{
+"id": 356,
+"series": { "cn": "SW 系列", "en": "SW Series" },
+"orderCode": "SW224",
+"no": 101,
+"item": "10" 49",
+"product": "狼道",
+"packing": "4/1",
+"price": null
+},
+{
+"id": 357,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P300",
+"no": 102,
+"item": "10"138 V",
+"product": "狂野非洲 (悟空)",
+"packing": "1/1",
+"price": 420.00
+},
+{
+"id": 358,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P301",
+"no": 103,
+"item": "11"138V",
+"product": "浪漫巴黎",
+"packing": "1/1",
+"price": 430.00
+},
+{
+"id": 359,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P302",
+"no": 104,
+"item": "11"138V",
+"product": "黄金海岸",
+"packing": "1/1",
+"price": 460.00
+},
+{
+"id": 360,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P303",
+"no": 105,
+"item": "11"138V",
+"product": "锦绣中华",
+"packing": "1/1",
+"price": 480.00
+},
+{
+"id": 361,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P304",
+"no": 106,
+"item": "11"138V",
+"product": "蓝色多瑙河",
+"packing": "1/1",
+"price": 480.00
+},
+{
+"id": 362,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P305",
+"no": 107,
+"item": "9"138V",
+"product": "飞跃亚马孙 (游星)",
+"packing": "1/1",
+"price": 360.00
+},
+{
+"id": 363,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P306",
+"no": 108,
+"item": "11"138V",
+"product": "罗马假日",
+"packing": "1/1",
+"price": 480.00
+},
+{
+"id": 364,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P307",
+"no": 109,
+"item": "10"98",
+"product": "问界喜马拉雅 (金钻狼嚎)",
+"packing": "1/1",
+"price": 390.00
+},
+{
+"id": 365,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P308",
+"no": 110,
+"item": "10"138 V",
+"product": "奢靡迪拜 (红魔音)",
+"packing": "1/1",
+"price": null
+},
+{
+"id": 366,
+"series": { "cn": "PANDA 系列", "en": "Panda Series" },
+"orderCode": "P309",
+"no": 111,
+"item": "11"138 V",
+"product": "米兰之夜",
+"packing": "1/1",
+"price": 490.00
+},
+{
+"id": 367,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B1",
+"no": 112,
+"item": "4"16 Shot Cake (MM)",
+"product": "发财 (模压)",
+"packing": "40/1",
+"price": 380.00
+},
+{
+"id": 368,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B2",
+"no": 113,
+"item": "4"25 Shot Cake (MM)",
+"product": "进财 (模压)",
+"packing": "24/1",
+"price": 335.00
+},
+{
+"id": 369,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B3",
+"no": 114,
+"item": "4"36 Shot Cake (MM)",
+"product": "纳财 (模压)",
+"packing": "16/1",
+"price": 330.00
+},
+{
+"id": 370,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B4",
+"no": 115,
+"item": "4"49 Shot Cake (MM)",
+"product": "招财 (模压)",
+"packing": "12/1",
+"price": 330.00
+},
+{
+"id": 371,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B5",
+"no": 116,
+"item": "4"138 Shot Cake (MM)",
+"product": "来财 (模压)",
+"packing": "4/1",
+"price": 305.00
+},
+{
+"id": 372,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B6",
+"no": 117,
+"item": "4"138 Shot Cake (MM)",
+"product": "四季发财 (模压)",
+"packing": "4/1",
+"price": 300.00
+},
+{
+"id": 373,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B7",
+"no": 118,
+"item": "4"25 Shot Cake",
+"product": "百花齐放",
+"packing": "24/1",
+"price": null
+},
+{
+"id": 374,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B8",
+"no": 119,
+"item": "4"36 Shot Cake",
+"product": "吉祥如意",
+"packing": "16/1",
+"price": null
+},
+{
+"id": 375,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B9",
+"no": 120,
+"item": "4"49 Shot Cake",
+"product": "福星高照",
+"packing": "12/1",
+"price": 390.00
+},
+{
+"id": 376,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B10",
+"no": 121,
+"item": "4"138 Shot Cake ( A+)",
+"product": "暴富  ( A+)",
+"packing": "4/1",
+"price": 390.00
+},
+{
+"id": 377,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B11",
+"no": 122,
+"item": "4"138 Shot Cake ( A+)",
+"product": "摇钱树  ( A+)",
+"packing": "4/1",
+"price": 380.00
+},
+{
+"id": 378,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B12",
+"no": 123,
+"item": "5"25 Shot Cake",
+"product": "好运来",
+"packing": "24/1",
+"price": 440.00
+},
+{
+"id": 379,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B13",
+"no": 124,
+"item": "5"138 Shot Cake ( A+)",
+"product": "我是长沙的  (A+)",
+"packing": "4/1",
+"price": 465.00
+},
+{
+"id": 380,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B14",
+"no": 125,
+"item": "5"138V Shot Cake  ( A+)",
+"product": "我是浏阳的  (A+)",
+"packing": "3/1",
+"price": 440.00
+},
+{
+"id": 381,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B15",
+"no": 126,
+"item": "5"138V Shot Cake",
+"product": "大汉铁军",
+"packing": "4/1",
+"price": 620.00
+},
+{
+"id": 382,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B16",
+"no": 127,
+"item": "6" 138V Shot Cake -Yellow",
+"product": "火神传说 (黄色)",
+"packing": "2/1",
+"price": 440.00
+},
+{
+"id": 383,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B17",
+"no": 128,
+"item": "6" 138V Shot Cake -Purple",
+"product": "火神传说 (紫色）",
+"packing": "2/1",
+"price": 430.00
+},
+{
+"id": 384,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B18",
+"no": 129,
+"item": "VIP 6" 138V Shot Cake -A",
+"product": "宋韵千秋 -(宋朝）",
+"packing": "3/1",
+"price": 510.00
+},
+{
+"id": 385,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B19",
+"no": 130,
+"item": "VIP 6" 138V Shot Cake -B",
+"product": "大唐盛世 -(唐朝）",
+"packing": "3/1",
+"price": 530.00
+},
+{
+"id": 386,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B20",
+"no": 131,
+"item": "VIP 6" 138V Shot Cake -C",
+"product": "秦统六合 -(秦朝）",
+"packing": "3/1",
+"price": 530.00
+},
+{
+"id": 387,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B21",
+"no": 132,
+"item": "VIP 6" 138V Shot Cake -D",
+"product": "武王伐纣 -(周朝）",
+"packing": "3/1",
+"price": 530.00
+},
+{
+"id": 388,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B22",
+"no": 133,
+"item": "VIP 6" 138V -ABC",
+"product": "一统天下-"第二代 "",
+"packing": "1/1",
+"price": 455.00
+},
+{
+"id": 389,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B23",
+"no": 134,
+"item": "7" 36 Shot Cake",
+"product": "花开锦绣",
+"packing": "6/1",
+"price": 400.00
+},
+{
+"id": 390,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B24",
+"no": 135,
+"item": "9" 19 Shot Cake",
+"product": "金碧辉煌 (1.2'')",
+"packing": "6/1",
+"price": 330.00
+},
+{
+"id": 391,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B25",
+"no": 136,
+"item": "9" 25",
+"product": "彩烟",
+"packing": "8/1",
+"price": null
+},
+{
+"id": 392,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B26",
+"no": 137,
+"item": "9" 25 Shot Cake",
+"product": "富贵满堂 (1.2'')",
+"packing": "8/1",
+"price": 500.00
+},
+{
+"id": 393,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B27",
+"no": 138,
+"item": "9" 49 Shot Cake",
+"product": "富贵如意 (1.2'')",
+"packing": "4/1",
+"price": 480.00
+},
+{
+"id": 394,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B28",
+"no": 139,
+"item": "1.2 -70V Fan Cake",
+"product": "金波银雨",
+"packing": "1/1",
+"price": 330.00
+},
+{
+"id": 395,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B29",
+"no": 140,
+"item": "10"99 V Fan Cake",
+"product": "无忧无虑 -3D 扇形",
+"packing": "1/1",
+"price": 420.00
+},
+{
+"id": 396,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B30",
+"no": 141,
+"item": "11"128 V Fan Cake",
+"product": "诗和远方 -3D 扇形",
+"packing": "1/1",
+"price": 470.00
+},
+{
+"id": 397,
+"series": { "cn": "盆花系列", "en": "Fan Cake Series" },
+"orderCode": "B31",
+"no": 142,
+"item": "12"128 V2 Fan Cake*",
+"product": "辉跃 芭蕾王子*",
+"packing": "1/1",
+"price": 465.00
+},
+{
+"id": 398,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 100",
+"no": 143,
+"item": "4 " 16 Shot",
+"product": "硬实力",
+"packing": "1/1",
+"price": null
+},
+{
+"id": 399,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 101",
+"no": 144,
+"item": "4 " 16 Shot",
+"product": "将军令",
+"packing": "1/1",
+"price": 1080.00
+},
+{
+"id": 400,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 102",
+"no": 145,
+"item": "3 " 25 Shot",
+"product": "三板斧",
+"packing": "1/1",
+"price": 760.00
+},
+{
+"id": 401,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 103",
+"no": 146,
+"item": "3 " 25 Shot",
+"product": "天涯客",
+"packing": "1/1",
+"price": 760.00
+},
+{
+"id": 402,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 104",
+"no": 147,
+"item": "2 " 25 Shot",
+"product": "赤免 25 （带尾）",
+"packing": "2/1",
+"price": 630.00
+},
+{
+"id": 403,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 105",
+"no": 148,
+"item": "2 " 25 Shot",
+"product": "火麒麟",
+"packing": "2/1",
+"price": 520.00
+},
+{
+"id": 404,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV106",
+"no": 149,
+"item": "2 " 25 V Shot",
+"product": "火凤凰",
+"packing": "2/1",
+"price": 610.00
+},
+{
+"id": 405,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 107",
+"no": 150,
+"item": "2 " 36 Shot",
+"product": "赤免 36",
+"packing": "1/1",
+"price": 350.00
+},
+{
+"id": 406,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 108",
+"no": 151,
+"item": "2 " 36 Shot",
+"product": "超级䁔蓝",
+"packing": "1/1",
+"price": 470.00
+},
+{
+"id": 407,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 109",
+"no": 152,
+"item": "2 " 36 Shot",
+"product": "镇山河 36",
+"packing": "2/1",
+"price": 650.00
+},
+{
+"id": 408,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 110",
+"no": 153,
+"item": "2 " 36 -O Shot",
+"product": "镇山虎 36 （带尾+环）",
+"packing": "1/1",
+"price": 420.00
+},
+{
+"id": 409,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 111",
+"no": 154,
+"item": "2 " 36 V Shot",
+"product": "独狐九剑",
+"packing": "1/1",
+"price": 490.00
+},
+{
+"id": 410,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 112",
+"no": 155,
+"item": "2 " 49 Shot",
+"product": "镇山河 49",
+"packing": "1/1",
+"price": 450.00
+},
+{
+"id": 411,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 113",
+"no": 156,
+"item": "2 " 49 Shot",
+"product": "女侠客 (雷芯)",
+"packing": "1/1",
+"price": 485.00
+},
+{
+"id": 412,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 114",
+"no": 157,
+"item": "2 " 88 Shot",
+"product": "环环相扣",
+"packing": "1/1",
+"price": 650.00
+},
+{
+"id": 413,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 115",
+"no": 158,
+"item": "2 " 88 Shot",
+"product": "狼图腾",
+"packing": "1/1",
+"price": 570.00
+},
+{
+"id": 414,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 116",
+"no": 159,
+"item": "11" 188V",
+"product": "至尊王***** 哪吒 -(1.2+ 2)",
+"packing": "1/1",
+"price": 720.00
+},
+{
+"id": 415,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 117",
+"no": 160,
+"item": "11" 188V",
+"product": "至尊王***** 盟主霸王 - (1.2+2)",
+"packing": "1/1",
+"price": 780.00
+},
+{
+"id": 416,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 118",
+"no": 161,
+"item": "11" 198V",
+"product": "至尊王***** 盟主至尊 - (1.2+2)",
+"packing": "1/1",
+"price": 800.00
+},
+{
+"id": 417,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV 119",
+"no": 162,
+"item": "11" 198V",
+"product": "至尊王***** 敖丙 - (1.2+ 2)",
+"packing": "1/1",
+"price": 720.00
+},
+{
+"id": 418,
+"series": { "cn": "SV 系列 一", "en": "SV Series 1" },
+"orderCode": "SV120",
+"no": 163,
+"item": "12" 188V",
+"product": "至尊王***** 龙腾 -(1.2+ 2)",
+"packing": "1/1",
+"price": 910.00
+},
+{
+"id": 419,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 200",
+"no": 164,
+"item": "10" 60",
+"product": "3号战狼 60",
+"packing": "3/1",
+"price": 425.00
+},
+{
+"id": 420,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 201",
+"no": 165,
+"item": "10" 80",
+"product": "3号战狼 80",
+"packing": "2/1",
+"price": 430.00
+},
+{
+"id": 421,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 202",
+"no": 166,
+"item": "10"100 V",
+"product": "至尊*** 东方不败 (1.5)",
+"packing": "1/1",
+"price": 480.00
+},
+{
+"id": 422,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 203",
+"no": 167,
+"item": "10"168",
+"product": "挖金矿 (3分钟）",
+"packing": "1/1",
+"price": 500.00
+},
+{
+"id": 423,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 204",
+"no": 168,
+"item": "10"168",
+"product": "狂飙 168",
+"packing": "1/1",
+"price": 490.00
+},
+{
+"id": 424,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 205",
+"no": 169,
+"item": "10"168 V",
+"product": "空中芭蕾 168",
+"packing": "1/1",
+"price": 600.00
+},
+{
+"id": 425,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 206",
+"no": 170,
+"item": "10"168 V",
+"product": "如虎添翼",
+"packing": "1/1",
+"price": 520.00
+},
+{
+"id": 426,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 207",
+"no": 171,
+"item": "10"168 V",
+"product": "令狐冲",
+"packing": "1/1",
+"price": 535.00
+},
+{
+"id": 427,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 208",
+"no": 172,
+"item": "10"168 V",
+"product": "敖光",
+"packing": "1/1",
+"price": 580.00
+},
+{
+"id": 428,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 209",
+"no": 173,
+"item": "10"168 V",
+"product": "申公豹",
+"packing": "1/1",
+"price": 590.00
+},
+{
+"id": 429,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 210",
+"no": 174,
+"item": "10"188 V",
+"product": "空中芭蕾 188",
+"packing": "1/1",
+"price": 630.00
+},
+{
+"id": 430,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 211",
+"no": 175,
+"item": "10"188 V",
+"product": "魔童闹海",
+"packing": "1/1",
+"price": 640.00
+},
+{
+"id": 431,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 212",
+"no": 176,
+"item": "10"198",
+"product": "狂飙 198",
+"packing": "1/1",
+"price": 530.00
+},
+{
+"id": 432,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 213",
+"no": 177,
+"item": "10"198 V",
+"product": "玉蝴蝶",
+"packing": "1/1",
+"price": 580.00
+},
+{
+"id": 433,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 214",
+"no": 178,
+"item": "10"198 V",
+"product": "气吞天下",
+"packing": "1/1",
+"price": 670.00
+},
+{
+"id": 434,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 215",
+"no": 179,
+"item": "10"228 V",
+"product": "空中芭蕾 228",
+"packing": "1/1",
+"price": 730.00
+},
+{
+"id": 435,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 216",
+"no": 180,
+"item": "10"228 V",
+"product": "狂霸天下",
+"packing": "1/1",
+"price": 700.00
+},
+{
+"id": 436,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 217",
+"no": 181,
+"item": "12"228 V",
+"product": "傲霸天下",
+"packing": "1/1",
+"price": 700.00
+},
+{
+"id": 437,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 218",
+"no": 182,
+"item": "11"268 V",
+"product": "雅致版***** 定江山",
+"packing": "1/1",
+"price": 2230.00
+},
+{
+"id": 438,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 219",
+"no": 183,
+"item": "11"268 V",
+"product": "至尊*** 龙腾盛世  (1.5)",
+"packing": "1/1",
+"price": 720.00
+},
+{
+"id": 439,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 220",
+"no": 184,
+"item": "8"276 V",
+"product": "十面埋伏 *** 彩云",
+"packing": "1/1",
+"price": 665.00
+},
+{
+"id": 440,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 221",
+"no": 185,
+"item": "10"399 V",
+"product": "黑金版***** 风云之雄霸天下 (3分钟）",
+"packing": "1/1",
+"price": 2330.00
+},
+{
+"id": 441,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 222",
+"no": 186,
+"item": "8"168 V",
+"product": "钟馗",
+"packing": "1/1",
+"price": 510.00
+},
+{
+"id": 442,
+"series": { "cn": "SV 系列二", "en": "SV Series 2" },
+"orderCode": "SV 223",
+"no": 187,
+"item": "11" 88 KING",
+"product": "至尊 龙吟笛",
+"packing": "1/1",
+"price": 510.00
+},
+{
+"id": 443,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 300",
+"no": 188,
+"item": "4"168",
+"product": "财运亨通",
+"packing": "4/1",
+"price": 520.00
+},
+{
+"id": 444,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 301",
+"no": 189,
+"item": "4"228",
+"product": "老板发财",
+"packing": "3/1",
+"price": 530.00
+},
+{
+"id": 445,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 302",
+"no": 190,
+"item": "PRO - 7"228 V (3D)",
+"product": "后羿射日",
+"packing": "1/1",
+"price": 410.00
+},
+{
+"id": 446,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 303",
+"no": 191,
+"item": "PRO - 6"168 V",
+"product": "大秦虎师",
+"packing": "3/1",
+"price": 740.00
+},
+{
+"id": 447,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 304",
+"no": 192,
+"item": "PRO - 6"168 V",
+"product": "凤凰涅槃",
+"packing": "2/1",
+"price": 515.00
+},
+{
+"id": 448,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 305",
+"no": 193,
+"item": "PRO - 7"276 V (3D)",
+"product": "黄帝大战",
+"packing": "1/1",
+"price": 470.00
+},
+{
+"id": 449,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 306",
+"no": 194,
+"item": "PRO - 7"308 V (3D)",
+"product": "女蜗补天",
+"packing": "1/1",
+"price": 505.00
+},
+{
+"id": 450,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 307",
+"no": 195,
+"item": "PRO - 6"188 V (3D)",
+"product": "盘古开天",
+"packing": "2/1",
+"price": 600.00
+},
+{
+"id": 451,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 308",
+"no": 196,
+"item": "VIP - 5"276 (3D)",
+"product": "名扬天下",
+"packing": "2/1",
+"price": 650.00
+},
+{
+"id": 452,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 309",
+"no": 197,
+"item": "VIP - 6"168 (3D)",
+"product": "天下第一 (1.0)",
+"packing": "2/1",
+"price": 530.00
+},
+{
+"id": 453,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 310",
+"no": 198,
+"item": "VIP - 6"168 (3D)",
+"product": "天下无敌 (1.0)",
+"packing": "2/1",
+"price": 550.00
+},
+{
+"id": 454,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 311",
+"no": 199,
+"item": "VIP - 7"228 (3D)",
+"product": "君临天下",
+"packing": "2/1",
+"price": 650.00
+},
+{
+"id": 455,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 312",
+"no": 200,
+"item": "VIP - 7"268 (3D)",
+"product": "独霸天下",
+"packing": "2/1",
+"price": 750.00
+},
+{
+"id": 456,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 313",
+"no": 201,
+"item": "VIP - 7"308 (3D)",
+"product": "横行天下",
+"packing": "1/1",
+"price": 480.00
+},
+{
+"id": 457,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 314",
+"no": 202,
+"item": "VIP - 7"399 (3D)",
+"product": "唯我独尊",
+"packing": "1/1",
+"price": 590.00
+},
+{
+"id": 458,
+"series": { "cn": "SV 系列三", "en": "SV Series 3" },
+"orderCode": "SV 315",
+"no": 203,
+"item": "PRO -7"288 (3D)",
+"product": "猎豹",
+"packing": "1/1",
+"price": 450.00
+}
+]
+;
+            displayProducts();
+        }
+
+        // Display products in table
+	function displayProducts() {
+	    const tbody = document.getElementById('productsTableBody');
+	    tbody.innerHTML = '';
+
+	    const grouped = {};
+
+	    const filteredProducts = currentFilter === 'all'
+	        ? products
+	        : products.filter(p => p.series.cn === currentFilter);
+
+	    filteredProducts.forEach(p => {
+
+	        const key = p.series.en;
+	        if (!grouped[key]) grouped[key] = { ...p.series, items: [] };
+	        grouped[key].items.push(p);
+	    });
+
+	    Object.values(grouped).forEach(series => {
+
+	        const headerRow = document.createElement('tr');
+	        headerRow.innerHTML = `
+	            <td colspan="6" style="
+	                background:#f5f5f5;
+	                padding:14px 18px;
+	                border-top:3px solid #d32f2f;
+	            ">
+	                <div style="font-size:1.2em;font-weight:bold;color:#d32f2f;">
+	                    ${series.cn}
+	                </div>
+	                <div style="font-size:0.95em;color:#666;">
+	                    ${series.en}
+	                </div>
+	            </td>
+	        `;
+	        tbody.appendChild(headerRow);
+
+	        series.items.forEach(product => {
+	            const row = document.createElement('tr');
+	            row.className = 'product-row';
+	            row.innerHTML = `
+	                <td class="code-cell">${product.orderCode}</td>
+	                <td class="no-cell">${product.no}</td>
+	                <td class="item-cell">
+	                    ${product.item}<br>${product.product}
+	                </td>
+	                <td class="packing-cell">${product.packing}</td>
+	                <td class="price-cell">RM${product.price.toFixed(2)}</td>
+	                <td class="order-cell">
+	                    <input type="number" id="qty-${product.id}" class="qty-input" value="0" min="0">
+	                    <button class="add-btn" onclick="addToCart(${product.id})">添加 Add (+)</button>
+	                </td>
+	            `;
+	            tbody.appendChild(row);
+	        });
+	    });
+	}
+
+	function filterCategory(category) {
+	    currentFilter = category;
+
+	    // Update tab active state
+	    document.querySelectorAll('.filter-tab').forEach(tab => {
+	        tab.classList.remove('active');
+	    });
+
+	    event.target.classList.add('active');
+
+	    displayProducts();
+	}
+
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const quantity = parseInt(document.getElementById(`qty-${productId}`).value);
+            
+            if (quantity <= 0) {
+                alert('请输入数量 Please enter quantity');
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: quantity
+                });
+            }
+            
+            updateCart();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            document.getElementById(`qty-${productId}`).value = 0;
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartContent = document.getElementById('cartContent');
+            const cartCount = document.getElementById('cartCount');
+            const checkoutSection = document.getElementById('checkoutSection');
+            
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = '<div class="cart-empty">购物车是空的<br>Your cart is empty</div>';
+                checkoutSection.style.display = 'none';
+                return;
+            }
+            
+            checkoutSection.style.display = 'block';
+            
+            const cartHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <div>
+                            <div class="cart-item-code">${item.orderCode}</div>
+                            <div class="cart-item-name">${item.item}</div>
+                            <div class="cart-item-name">${item.product}</div>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">删除 Remove (-)</button>
+                    </div>
+                    <div class="cart-item-details">
+                        <span>数量: ${item.quantity} × RM${item.price.toFixed(2)}</span>
+                        <span class="cart-item-price">RM${(item.quantity * item.price).toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+            
+            cartContent.innerHTML = `<div class="cart-items">${cartHTML}</div>`;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            document.getElementById('subtotal').textContent = `RM${subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `RM${subtotal.toFixed(2)}`;
+        }
+
+        // Handle checkout
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const messageDiv = document.getElementById('message');
+            
+            checkoutBtn.disabled = true;
+            checkoutBtn.textContent = '处理中... Processing...';
+            messageDiv.style.display = 'none';
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const orderData = {
+                orderNumber: 'ORD-' + Date.now(),
+                timestamp: new Date().toISOString(),
+                customer: {
+                    code: document.getElementById('customerCode').value,
+                    phone: document.getElementById('customerPhone').value,
+                    address: document.getElementById('shippingAddress').value
+                },
+                items: cart.map(item => ({
+                    orderCode: item.orderCode,
+                    productId: item.id,
+                    itemName: item.item,
+                    productName: item.product,
+                    packing: item.packing,
+                    price: item.price,
+                    quantity: item.quantity,
+                    subtotal: item.price * item.quantity
+                })),
+                summary: {
+                    subtotal: subtotal,
+                    total: subtotal
+                }
+            };
+            
+            console.log('Order Data:', orderData);
+            
+            if (WEBHOOK_URL === 'none') {
+                messageDiv.textContent = '演示模式：请在控制台查看订单数据。配置webhook URL以提交订单。\nDemo mode: Check console for order data. Configure webhook URL to submit orders.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = '提交订单 Place Order';
+                return;
+            }
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(orderData)
+                });
+                
+                if (response.ok) {
+                    messageDiv.textContent = `订单提交成功！Order placed successfully! Order #${orderData.orderNumber}`;
+                    messageDiv.className = 'message success';
+                    messageDiv.style.display = 'block';
+                    
+                    // Clear cart and form
+                    cart = [];
+                    products.forEach(p => {
+                        const input = document.getElementById(`qty-${p.id}`);
+                        if (input) input.value = 0;
+                    });
+                    updateCart();
+                    document.getElementById('checkoutForm').reset();
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = '提交订单时出错。请重试。\nError placing order. Please try again.';
+                messageDiv.className = 'message error';
+                messageDiv.style.display = 'block';
+            } finally {
+                checkoutBtn.disabled = false;
+                checkoutBtn.textContent = '提交订单 Place Order';
+            }
+        });
+
+        // Initialize
+        loadProductData();
+    </script>
+
+</body>
+</html>
